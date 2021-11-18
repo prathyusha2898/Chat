@@ -1,0 +1,8 @@
+ {
+    "name":"OSOS-info-module",
+    "description":"Dealing with the information",
+    "repository":"https://github.com/osos-technologies/osos-info-module_vamsi",
+    "logo":"logo.png",
+    "keywords":["node","express","static"],
+    "image":"heroku/nodejs"
+}

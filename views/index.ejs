@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>App Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/sidenav.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+  <style>
+  *{
+    font-family: 'Ubuntu', sans-serif;
+  }
+  #form-section a{
+    text-decoration: none;
+    font-size: 2.5vw;
+    color: black;
+  }
+  #form-section i{
+    padding-right: 1vw;
+  }
+  </style>
+</head>
+<body>
+<!-- sidenav  -->
+<!-- Sidebar -->
+<div class="w3-sidebar w3-bar-block w3-animate-left" style="display:none;z-index:5" id="mySidebar">
+  <button class="w3-bar-item w3-button w3-large" onclick="w3_close()"> &times;</button>
+  <h4 style="margin-left: 2vw;">Logs</h4>
+  <a href="#" onclick="showDataInfo('<%= user.username %>','<%=dataExists%>')" class="w3-bar-item w3-button">Infos</a>
+  <div id="info-list"></div>
+  <a href="/media/images" class="w3-bar-item w3-button" target="_blank">Photos</a>
+  <a href="/media/videos" class="w3-bar-item w3-button" target="_blank">Videos</a>
+  <a href="/media/files" class="w3-bar-item w3-button" target="_blank">Files</a>
+</div>
+
+<!-- end of sidenav -->
+<!-- Page Content -->
+<div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
+
+<div>
+  <button class="w3-button w3-white w3-xxlarge" onclick="w3_open()">&#9776;</button>
+  <div class="w3-container">
+  </div>
+</div>
+<div class="container" >
+    
+  <!-- <h1>Lighter, Secondary Text</h1> -->
+   <h2><u>Welcome to Application Page <%= user.username %></u></h2> 
+    <div id="host" style="display: none;"><%=hostname%></div>
+   <a href="/logout" class="btn btn-danger" style="position: fixed;top:1vw;right: 2vw;">Logout</a>
+    <div class="row">
+        <div class="col-lg-10">
+            <% if(dataExists){ %>
+              <button class="btn btn-success" onclick="viewForm('<%=user.username%>')">View Form</button>
+              <button class="btn btn-success" onclick="editForm('<%=currentUserinfoId%>')">Edit Form</button>
+              <form action="/deleteData/<%=currentUserinfoId%>" method="POST"><button class="btn btn-danger" type="submit">Delete Form</button></form>
+              <button class="btn btn-primary" onclick="addTimeSetter('<%=currentUserinfoId%>')">PAY FOR TIME</button><span id="time"></span>
+            <% }else{  %>
+              <button class="btn btn-success" onclick="displayForm('<%= user.username %>')">New Form</button>
+            <% } %>
+            <!-- <button class="btn btn-warning" onclick="showLogs('<%= user.username %>')">Logs</button> -->
+            <div class="row">
+              <div class="col-lg-6" id="form-section"></div>
+              <div class="col-lg-6" id="comment-section"></div>
+            </div>  
+        </div>
+        <div class="col-lg-2">
+          <div id="users">
+            <h5 style="float: right;margin-top: -3vw;"><u>Visible Users</u></h5>
+            <% for(var i=0;i<viewableUsers.length;i++){ %>
+              <% if(user.username!=viewableUsers[i].name){ %>
+                  <div class="card bg-primary text-white" style="display: block;margin:0.5vw auto;padding:0.5vw">
+                    <h4><i class="fa fa-user-circle" style="color: white;padding-right: 1vw;" aria-hidden="true"></i><span onclick="showInfo({name:'<%= viewableUsers[i].name %>',postid:'<%= viewableUsers[i].postid %>',timeStamp:'<%= viewableUsers[i].timestamp%>'})"><%= viewableUsers[i].name %></span></h4>
+                  </div>        
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+    </div>
+</div>
+<script src="/js/index.js"></script>
+</body>
+</html>
+
